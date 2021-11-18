@@ -14,11 +14,11 @@ You have to specify the state in this case. Example: 'http://api.openweathermap.
 - OpenWeather uses UTC time zone for all API calls.
 
 ### Instructions:
-1. Create a free OpenWeatherMap acoount https://home.openweathermap.org/users/sign_up and get your API key. It is FREE, but you need to register.
-2. Create an environment variable named OpenWeatherAPI and put your key as the value.
+1. Create a free OpenWeatherMap account https://home.openweathermap.org/users/sign_up and get your API key. It is FREE, but you need to register.
+2. Create an environment variable named OpenWeatherAPI and put your API key as the value.
 3. Open Visual Studio and load WeatherComparison solution.
 4. To use IHttpClientFatory, you need to add "Microsoft.Extensions.Http" nuget package.
-5. Run the appliction
+5. Run the appliction.
 6. Enter cities in the following format, i.e.,
    - Paris,FR
    - Louisville,KY,US -> for US locations
