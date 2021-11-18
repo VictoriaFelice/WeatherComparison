@@ -1,9 +1,8 @@
 ## "Current City Weather Comparison" console app :sun_behind_rain_cloud:
 ### CodeLouisville .NET Project
-This is a Console Application that can run on Windows, Linux and macOS
-NET 5.0 (Current)
-You can compare current weather in up to 5 cities at a time. Cities will be sorted from warmest to coldest in the output.
-I am using IHttpClientFatory to consume multiple API calls in a for loop.
+- This is a Console Application that can run on Windows, Linux and macOS. NET 5.0 (Current)
+- You can compare current weather in up to 5 cities at a time. Cities will be sorted from warmest to coldest in the output.
+- I am using IHttpClientFatory to consume multiple API calls in a for loop.
 
 ### Description:
 - To access current weather data for any location on Earth, I am using OpenWeather Api https://openweathermap.org/current
