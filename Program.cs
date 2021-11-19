@@ -44,7 +44,7 @@ namespace WeatherComparison
                     var sortedCites = SortCitiesByTemp(weather);
                     OutputResults(sortedCites);
 
-                    Console.Write("Do you want to enter new cities? Press Enter to continue or type 'Q' to quit: ");
+                    Console.Write("\nDo you want to enter new cities? Press Enter to continue or type 'Q' to quit: ");
                     var yesNo = Console.ReadLine();
                     if (yesNo?.ToLower() != "q") continue;
                     return;
@@ -58,7 +58,7 @@ namespace WeatherComparison
             {
                 case 0:
                     Console.Write(
-                        "\nEnter City,two-letter Country Code i.e [Venice,IT]\nFor US locations - Enter City,State,US i.e [Louisville,KY,US]: ");
+                        "Enter City,two-letter Country Code i.e [Venice,IT]\nFor US locations - Enter City,State,US i.e [Louisville,KY,US]: ");
                     break;
                 case 1:
                     Console.Write(
@@ -116,20 +116,19 @@ namespace WeatherComparison
                 catch (HttpRequestException httpRequestException)
                 {
                     Console.WriteLine("\n");
-                    Console.WriteLine(@" ___");
-                    Console.WriteLine(@"/ (_)");                   
-                    Console.WriteLine(@"\__   ,_    ,_    __   ,_");
-                    Console.WriteLine(@"/    /  |  /  |  /  \_/  |");
-                    Console.WriteLine(@"\___/   |_/   |_/\__/    |_/");
+                    PrintErrorFiglet();
                     Console.WriteLine($"Error getting weather data from OpenWeatherMap: {httpRequestException.Message}");
                     if (httpRequestException.StatusCode == null) return default;
                     switch ((int)httpRequestException.StatusCode)
                     {
                         case 401:
-                            Console.WriteLine("Please, check your API key.");
+                            Console.WriteLine("Please, check your API key.\n");
                             break;
                         case 404:
-                            Console.WriteLine($"City you entered '{cityCountry}' not found.");
+                            Console.WriteLine($"City you entered '{cityCountry}' not found.\n");
+                            break;
+                        default:
+                            Console.WriteLine("Unexpected error. Please, try again.");
                             break;
                     }
 
@@ -161,11 +160,12 @@ namespace WeatherComparison
         // Printing
         private static void PrintWelcomeMessage()
         {
-            const string welcomeMessage = "Welcome to the \"Current City Weather Comparison\" program!";
-            var spacingBefore = new string(' ', (DecorationMainLength - welcomeMessage.Length) / 2);
-            PrintDecorationLine('*', DecorationMainLength);
-            Console.WriteLine(spacingBefore + welcomeMessage);
-            PrintDecorationLine('*', DecorationMainLength);
+            // const string welcomeMessage = "Welcome to the \"Current City Weather Comparison\" program!";
+            // var spacingBefore = new string(' ', (DecorationMainLength - welcomeMessage.Length) / 2);
+            // PrintDecorationLine('*', DecorationMainLength);
+            //Console.WriteLine(spacingBefore + welcomeMessage);
+            PrintWelcomeFiglet();
+            PrintDecorationLine('=', DecorationMainLength);
         }
 
         private static void PrintDecorationLine(char element, int length)
@@ -175,57 +175,44 @@ namespace WeatherComparison
 
         private static void PrintResultsHeading(Dictionary<string, CityWeather> sortedCityWeather)
         {
-            //const string resultHeader = "|R|E|S|U|L|T|S|";
-            var resultMessage =
+            var resultMessage = 
                 $"Currently, the warmest city is {sortedCityWeather.Keys.First().ToUpper()}. \nColdest city is {sortedCityWeather.Keys.Last().ToUpper()}.";
             var resultDecorationLine = new StringBuilder("+-".Length * DecorationMainLength / 2).Insert(0, "+-", DecorationMainLength / 2).ToString();
             
             Console.WriteLine("\n");
+            PrintResultsFiglet();
+            PrintDecorationLine('=', DecorationMainLength);
+            Console.WriteLine("\n" + resultDecorationLine + "\n");
+            Console.WriteLine(resultMessage);
+            Console.WriteLine("\n" + resultDecorationLine + "\n");
+            PrintDecorationLine('=', DecorationMainLength);
+        }
+
+        private static void PrintWelcomeFiglet()
+        {
+            Console.WriteLine(@" _              _");
+            Console.WriteLine(@"(_|   |   |_ / | |");
+            Console.WriteLine(@"  |   |   | _  | |  __   __   _  _  _    _");
+            Console.WriteLine(@"  |   |   ||/  |/  /    /  \_/ |/ |/ |  |/");
+            Console.WriteLine(@"   \_/ \_/ |__/|__/\___/\__/   |  |  |_/|__//");
+        }
+
+        private static void PrintResultsFiglet()
+        {
             Console.WriteLine(@" , __                  _");     
             Console.WriteLine(@"/|/  \                | |");
             Console.WriteLine(@" |___/  _   ,         | |_|_  ,");
             Console.WriteLine(@" | \   |/  / \_|   |  |/  |  / \_");
             Console.WriteLine(@" |  \_/|__/ \/  \_/|_/|__/|_/ \/");
-            PrintDecorationLine('=', DecorationMainLength);
-            Console.WriteLine("\n" + resultDecorationLine);
-            Console.WriteLine(resultMessage);
-            Console.WriteLine("\n" + resultDecorationLine);
-            PrintDecorationLine('=', DecorationMainLength);
-            
-            // var spacingBefore = new string(' ', (DecorationMainLength - resultHeader.Length) / 2);
-            // var centeredResultHeader = spacingBefore + resultHeader;
-
-            // Console.WriteLine("\n");
-            // PrintDecorationLine('=', DecorationMainLength);
-            // Console.WriteLine(resultDecorationLine);
-            // Console.WriteLine(centeredResultHeader);
-            // Console.WriteLine(resultDecorationLine);
-            // Console.WriteLine(resultMessage);
-            // PrintDecorationLine('=', DecorationMainLength);
         }
 
-        private static void PrintErrorHeading()
+        private static void PrintErrorFiglet()
         {
-            // const string errorHeader = "ERRORS";
-            // Console.WriteLine(@" ___");
-            // Console.WriteLine(@"/ (_)");                   
-            // Console.WriteLine(@"\__   ,_    ,_    __   ,_");
-            // Console.WriteLine(@"/    /  |  /  |  /  \_/  |");
-            // Console.WriteLine(@"\___/   |_/   |_/\__/    |_/");
-            // var resultMessage =
-            //     $"Currently, the warmest city is {sortedCityWeather.Keys.First().ToUpper()}. \nColdest city is {sortedCityWeather.Keys.Last().ToUpper()}.";
-            // var resultDecorationLine = new StringBuilder("+-".Length * DecorationMainLength / 2)
-            //     .Insert(0, "+-", DecorationMainLength / 2).ToString();
-            // var spacingBefore = new string(' ', (DecorationMainLength - resultHeader.Length) / 2);
-            // var centeredResultHeader = spacingBefore + resultHeader;
-            //
-            // Console.WriteLine("\n");
-            // PrintDecorationLine('=', DecorationMainLength);
-            // Console.WriteLine(resultDecorationLine);
-            // Console.WriteLine(centeredResultHeader);
-            // Console.WriteLine(resultDecorationLine);
-            // Console.WriteLine(resultMessage);
-            // PrintDecorationLine('=', DecorationMainLength);
+            Console.WriteLine(@" ___");
+            Console.WriteLine(@"/ (_)");                   
+            Console.WriteLine(@"\__   ,_    ,_    __   ,_");
+            Console.WriteLine(@"/    /  |  /  |  /  \_/  |");
+            Console.WriteLine(@"\___/   |_/   |_/\__/    |_/");
         }
     }
 }
